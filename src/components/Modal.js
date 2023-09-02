@@ -1,5 +1,3 @@
-import CinemaController from '../classes/CinemaController'
-
 export default class Modal extends HTMLElement {
   constructor () {
     super()
@@ -36,24 +34,9 @@ export default class Modal extends HTMLElement {
             margin-top: 25px
         }
     `
-  static #removeModal () {
-    const modal = document.querySelector('app-modal')
-    modal.remove()
-  }
 
   connectedCallback () {
     this.render()
-    const appCinema = document.querySelector('app-cinema')
-    const buttons = this.shadowRoot.querySelectorAll('button')
-
-    buttons.forEach((button) => {
-      button.addEventListener('click', function () {
-        const cajaNumber = this.attributes['data-number'].value
-        appCinema.setAttribute('express-caja', cajaNumber)
-        Modal.#removeModal()
-        new CinemaController().open(appCinema)
-      })
-    })
   }
 
   render () {

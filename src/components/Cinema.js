@@ -7,6 +7,10 @@ export default class Cinema extends HTMLElement {
   }
 
   static Styles = `
+    :host{
+      height: 100%;
+      display: block;
+    }
     :host > div {
       background-color: #f00;
       display: flex;

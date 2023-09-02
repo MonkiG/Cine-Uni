@@ -1,11 +1,16 @@
 export default class Caja extends HTMLElement {
   express = false
   number
+  clientId = 'Sin clientes'
   constructor () {
     super()
     this.attachShadow({ mode: 'open' })
     this.express = this.hasAttribute('express')
     this.number = this.getAttribute('number')
+  }
+
+  static get observedAttributes () {
+    return ['client']
   }
 
   static Styles = /* Css */`
@@ -28,19 +33,23 @@ export default class Caja extends HTMLElement {
     this.render()
   }
 
-  // attributeChangedCallback(name, oldValue, newValue){
-
-  //   if(newValue === 'express'){
-  //     this.express = true
-  //     this.shadowRoot.innerHTML += '(Express)'
-  //   }
-  // }
+  attributeChangedCallback (name, oldValue, newValue) {
+    if (name === 'client') {
+      if (newValue === '') {
+        this.clientId = 'Sin clientes'
+        this.render()
+      } else {
+        this.clientId = newValue
+        this.render()
+      }
+    }
+  }
 
   render () {
     this.shadowRoot.innerHTML = /* HTML */`
       <style>${Caja.Styles}</style>
       <h2>${this.express === true ? `Caja ${this.number} <br>(express)` : `Caja ${this.number}`}</h2>
-      <h3></h3>
+      <h3>${this.clientId}</h3>
     `
   }
 }

@@ -4,10 +4,13 @@ export default class Client {
   id
   name
   tickets
+  time
   constructor () {
+    const time = new Date()
     this.id = this.#idGenerator()
     this.name = this.#nameGenerator()
     this.tickets = this.#ticketsGenerator()
+    this.time = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}:${time.getMilliseconds()}`
   }
 
   #idGenerator () {

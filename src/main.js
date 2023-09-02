@@ -1,0 +1,5 @@
+import './components/Caja'
+import './components/Cinema'
+import './components/Modal'
+import './components/ClientList'
+import './style.css'

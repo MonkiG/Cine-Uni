@@ -7,6 +7,8 @@ export default class CinemaContext extends HTMLElement {
   cinemaController
   cajaExpress
   cajas
+  cinemaClientList
+
   constructor () {
     super()
     this.attachShadow({ mode: 'open' })
@@ -14,24 +16,26 @@ export default class CinemaContext extends HTMLElement {
 
   connectedCallback () {
     this.render()
-    this.appModal = this.shadowRoot.querySelector('app-modal')
-    this.modalButtons = this.appModal.shadowRoot.querySelectorAll('button')
-    this.appCinema = this.shadowRoot.querySelector('app-cinema')
-    // this.#cajasSelectors()
+    this.#domSelectorsAsignation()
     this.#modalButtonsListener()
   }
 
-  //   #cajasSelectors () {
-  //     const cajas = this.appCinema.shadowRoot.querySelectorAll('cinema-caja:not([express])')
-  //     const h3Elements = []
+  #init () {
+    this.cinemaController = new CinemaController(undefined, this.cajaExpress, this.cajas, this.cinemaClientList)
+    this.cinemaController.open(this.appCinema)
+  }
 
-  //     for (const caja of cajas) {
-  //       const h3Element = caja.shadowRoot.querySelector('h3')
-  //       h3Elements.push(h3Element)
-  //     }
+  #domSelectorsAsignation () {
+    this.appModal = this.shadowRoot.querySelector('app-modal')
+    this.modalButtons = this.appModal.shadowRoot.querySelectorAll('button')
+    this.appCinema = this.shadowRoot.querySelector('app-cinema')
+  }
 
-  //     this.cajas = h3Elements
-  //   }
+  #domCajasSelectorsAsignation () {
+    this.cajas = this.appCinema.shadowRoot.querySelectorAll('cinema-caja:not([express])')
+    this.cajaExpress = this.appCinema.shadowRoot.querySelector('[express]')
+    this.cinemaClientList = this.appCinema.shadowRoot.querySelector('cinema-client-list')
+  }
 
   #modalButtonsListener () {
     const self = this
@@ -40,10 +44,8 @@ export default class CinemaContext extends HTMLElement {
         const cajaNumber = this.attributes['data-number'].value
         self.appCinema.setAttribute('express-caja', cajaNumber)
         self.appModal.remove()
-        self.cajas = self.appCinema.shadowRoot.querySelectorAll('cinema-caja:not([express])')
-        self.cajaExpress = self.appCinema.shadowRoot.querySelector('[express]')
-        self.cinemaController = new CinemaController(undefined, self.cajaExpress, self.cajas)
-        self.cinemaController.open(self.appCinema)
+        self.#domCajasSelectorsAsignation()
+        self.#init()
       })
     })
   }

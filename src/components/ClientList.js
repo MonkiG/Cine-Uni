@@ -1,4 +1,6 @@
 export default class ClientList extends HTMLElement {
+  clientList
+  expressClientList
   constructor () {
     super()
     this.attachShadow({ mode: 'open' })
@@ -23,13 +25,54 @@ export default class ClientList extends HTMLElement {
       padding: 0;
       margin: 0;
       background-color: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      grid-template-rows: auto;
     }
     li{
       margin-left: 20px
     }
   `
+  static get observedAttributes () {
+    return ['new-client', 'new-client-express', 'delete-client', 'delete-client-express']
+  }
+
+  attributeChangedCallback (name, oldValue, newValue) {
+    if (name === 'new-client') {
+      const id = newValue
+      this.clientList.innerHTML += `<li id="${id}">${id}</li>`
+    }
+
+    if (name === 'new-client-express') {
+      const id = newValue
+      this.expressClientList.innerHTML += `<li id="${id}">${id}</li>`
+    }
+
+    if (name === 'delete-client') {
+      const clientId = newValue
+
+      // Encuentra el elemento 'li' con el ID correspondiente y elimínalo
+      const clientToRemove = this.shadowRoot.getElementById(`${clientId}`)
+      if (clientToRemove) {
+        clientToRemove.remove()
+      }
+    }
+
+    if (name === 'delete-client-express') {
+      const clientId = newValue
+
+      // Encuentra el elemento 'li' con el ID correspondiente y elimínalo
+      const clientToRemove = this.shadowRoot.getElementById(`${clientId}`)
+      if (clientToRemove) {
+        clientToRemove.remove()
+      }
+    }
+  }
+
   connectedCallback () {
     this.render()
+    this.clientList = this.shadowRoot.querySelector('[data-rol="client"] ul')
+    this.expressClientList = this.shadowRoot.querySelector('[data-rol="express-client"] ul')
   }
 
   render () {
@@ -37,24 +80,16 @@ export default class ClientList extends HTMLElement {
       <style>${ClientList.Styles}</style>
       <h4>Cola de clientes</h4>
       <div>
-        <div>
+        <div data-rol="client">
           <h5>Clientes</h5>
           <ul>
-            <li id="id-1">Elemento 1</li>
-            <li id="id-2">Elemento 2</li>
-            <li id="id-3">Elemento 3</li>
-            <li id="id-4">Elemento 4</li>
-            <li id="id-5">Elemento 5</li>
+           
           </ul>
         </div>
-        <div>
+        <div data-rol="express-client">
           <h5>Clientes express</h5>
           <ul>
-            <li id="id-1">Elemento 1</li>
-            <li id="id-2">Elemento 2</li>
-            <li id="id-3">Elemento 3</li>
-            <li id="id-4">Elemento 4</li>
-            <li id="id-5">Elemento 5</li>
+           
           </ul>
         </div>
       </div>

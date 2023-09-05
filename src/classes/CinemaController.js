@@ -10,6 +10,7 @@ export default class CinemaController {
   timeoutQueue = [] // Esta cola se usara para limpiar todos los timeouts cuando cierre el cine
   clientQueue = []
   clientExpress = []
+  clients = []
 
   // Estadisticas de las cajas
   cajaEstadistica = new Array(5).fill(0).map((_, index) => (
@@ -26,7 +27,7 @@ export default class CinemaController {
   cajasDom // Variable que almacena el elemento de las cajas que no son express (ARRAY)
   clientListDom // Variable que almacena el elemento de la cola de clientes
 
-  constructor (time = 0.1, expressCajaDom, cajasDom, clientListDom) {
+  constructor (time = 3, expressCajaDom, cajasDom, clientListDom) {
     this.time = time * 60 * 1000 // Atributo que define el tiempo que estara abierto el cine
     this.expressCajaDom = expressCajaDom
     this.cajasDom = cajasDom
@@ -78,7 +79,7 @@ export default class CinemaController {
     // Genera de 1 a 20 clientes dependiendo el contador
     for (let i = 1; i <= userCount; i++) {
       const newClient = new Client()
-
+      this.clients.push(newClient)
       if (newClient.tickets === 1) {
         this.clientExpressCounter++
         this.clientExpress.push(newClient)
@@ -172,7 +173,7 @@ export default class CinemaController {
 
     // Genera la recursividad de acuerdo a las cajas no express
     let i = 0
-    while (i < 4) {
+    while (i < this.cajasDom.length) {
       const firstQueueUser = this.clientQueue.shift()
       const caja = this.cajasDom[i]
 

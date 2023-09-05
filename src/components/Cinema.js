@@ -1,6 +1,6 @@
 // Componenete (Elemento html) de Cine
 export default class Cinema extends HTMLElement {
-  cajaExpress
+  cajaExpress = 1
   constructor () {
     super()
     this.attachShadow({ mode: 'open' })
@@ -27,10 +27,10 @@ export default class Cinema extends HTMLElement {
   }
 
   attributeChangedCallback (name, oldValue, newValue) {
-    if (name === 'express-caja') {
-      this.cajaExpress = Number(newValue)
-      this.render()
-    }
+    // if (name === 'express-caja') {
+    //   this.cajaExpress = Number(newValue)
+    //   this.render()
+    // }
 
     if (name === 'timer') {
       this.shadowRoot.querySelector('span').innerHTML = newValue
@@ -58,7 +58,7 @@ export default class Cinema extends HTMLElement {
       <div>
         ${cajas}
       </div>
-      <span> 3:00 </span>
+      <span> </span>
       <cinema-client-list new-client></cinema-client-list>
     `
   }

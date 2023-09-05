@@ -5,12 +5,15 @@ export default class Client {
   name
   tickets
   time
+  isExpress
+
   constructor () {
     const time = new Date()
     this.id = this.#idGenerator()
     this.name = this.#nameGenerator()
     this.tickets = this.#ticketsGenerator()
     this.time = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}:${time.getMilliseconds()}`
+    this.isExpress = this.tickets === 1
   }
 
   #idGenerator () {
@@ -52,10 +55,10 @@ export default class Client {
     ]
 
     // Asigna un nombre de manera aleatoria en forma de string
-    const clientName = `${nombres[getRandomInt(null, nombres.length)]}`
+    const clientName = `${nombres[getRandomInt(undefined, nombres.length)]}`
 
     // Asigna dos apellidos de manera aleatoria en forma de string
-    const clientLastnames = `${apellidos[getRandomInt(null, nombres.length)]} ${apellidos[getRandomInt(null, nombres.length)]}`
+    const clientLastnames = `${apellidos[getRandomInt(undefined, nombres.length)]} ${apellidos[getRandomInt(null, nombres.length)]}`
 
     // Retorna el nombre del cliente y los apellidos uniendolos
     return (`${clientName} ${clientLastnames}`)

@@ -1,3 +1,4 @@
+// Componenete (Elemento html) de la lista de clientes
 export default class ClientList extends HTMLElement {
   clientList
   expressClientList
@@ -15,11 +16,23 @@ export default class ClientList extends HTMLElement {
 
     }
     :host > div{
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-evenly;
-      align-items: center;
+      height: 50%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
       padding: 25px
+      
+    }
+
+    :host > div div{
+      border: 1px solid black;
+    }
+
+    h5{
+      margin: 0;
+      padding: 10px;
+      align-items:center;
+      border-bottom: 1px solid black;
     }
     ul{
       padding: 0;
@@ -28,9 +41,12 @@ export default class ClientList extends HTMLElement {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
       grid-template-rows: auto;
+      height: 350px;
+      overflow-y: scroll;
     }
     li{
-      margin-left: 20px
+      margin-left: 20px;
+     
     }
   `
   static get observedAttributes () {

@@ -1,3 +1,4 @@
+// Componenete (Elemento html) de Modal
 export default class Modal extends HTMLElement {
   constructor () {
     super()
@@ -6,23 +7,25 @@ export default class Modal extends HTMLElement {
 
   static Styles = /* Css */`
         :host{
+            color: black;
             display: flex;
             justify-content: center;
             align-items: center;
             position: absolute;
             z-index: 1;
             bottom: 0;
-            background-color: rgba(255,255,255, .5);
+            background-color: rgba(0,0,0, .9);
             height: 100vh;
             width: 100%;
         }
+        
         h1{
             padding: 0;
             margin: 0;
         }
 
         :host > div{
-            background-color: #c5c5c5;
+            background-color: #a5a5a5;
             padding: 50px;
             display: flex;
             flex-direction: column;

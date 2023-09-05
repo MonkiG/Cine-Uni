@@ -1,3 +1,4 @@
+// Componenete (Elemento html) de Cine
 export default class Cinema extends HTMLElement {
   cajaExpress
   constructor () {
@@ -12,7 +13,7 @@ export default class Cinema extends HTMLElement {
       display: block;
     }
     :host > div {
-      background-color: #f00;
+      background-color: #242424;
       display: flex;
       justify-content: space-evenly;
     }
@@ -58,7 +59,7 @@ export default class Cinema extends HTMLElement {
         ${cajas}
       </div>
       <span> 3:00 </span>
-      <cinema-client-list></cinema-client-list>
+      <cinema-client-list new-client></cinema-client-list>
     `
   }
 }

@@ -1,5 +1,6 @@
 import CinemaController from './../classes/CinemaController'
 
+// Componenete (Elemento html) de CinemaContext (Encargado de inicializar la logica)
 export default class CinemaContext extends HTMLElement {
   appCinema
   appModal
@@ -11,17 +12,20 @@ export default class CinemaContext extends HTMLElement {
 
   constructor () {
     super()
-    this.attachShadow({ mode: 'open' })
+    this.attachShadow({ mode: 'open' }) // Permite modificar el shadow dom
   }
 
+  // Metodo de los custom elements que se ejecuta cuando se inserta el elemento en el html
   connectedCallback () {
     this.render()
-    this.#domSelectorsAsignation()
+    this.#domSelectorsAsignation() // Asigna en variables los elementos html
     this.#modalButtonsListener()
   }
 
   #init () {
+    // Instancea la logica del cine
     this.cinemaController = new CinemaController(undefined, this.cajaExpress, this.cajas, this.cinemaClientList)
+    // Ejecuta el metodo para iniciar el cine
     this.cinemaController.open(this.appCinema)
   }
 
@@ -39,13 +43,14 @@ export default class CinemaContext extends HTMLElement {
 
   #modalButtonsListener () {
     const self = this
+    // A cada boton del modal se le asigna el evento click
     this.modalButtons.forEach((button) => {
       button.addEventListener('click', function () {
-        const cajaNumber = this.attributes['data-number'].value
-        self.appCinema.setAttribute('express-caja', cajaNumber)
-        self.appModal.remove()
-        self.#domCajasSelectorsAsignation()
-        self.#init()
+        const cajaNumber = this.attributes['data-number'].value // Obtiene el numero de caja
+        self.appCinema.setAttribute('express-caja', cajaNumber) // Establece cual es la caja express
+        self.appModal.remove() // Cierra el modal
+        self.#domCajasSelectorsAsignation() // Guarda las elementos html en una variable
+        self.#init() // Inicia la logica del cine
       })
     })
   }

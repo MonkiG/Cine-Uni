@@ -1,7 +1,19 @@
+// Componenete (Elemento html) de Caja
 export default class Caja extends HTMLElement {
   express = false
   number
+
   clientId = 'Sin clientes'
+  clientTickets = ''
+
+  clients = []
+  cajasTimeouts = []
+  time = 0
+  timer
+  timerInterval
+  allTickets = []
+  allTime = []
+  spanTimer
   constructor () {
     super()
     this.attachShadow({ mode: 'open' })
@@ -25,9 +37,7 @@ export default class Caja extends HTMLElement {
     h3{
       font-weight: lighter 
     }
-    span{
-      display:inline-block;
-    }
+   
   `
   connectedCallback () {
     this.render()
@@ -35,13 +45,15 @@ export default class Caja extends HTMLElement {
 
   attributeChangedCallback (name, oldValue, newValue) {
     if (name === 'client') {
-      if (newValue === '') {
+      const parsedData = JSON.parse(newValue)
+      if (parsedData.id === '') {
         this.clientId = 'Sin clientes'
         this.render()
-      } else {
-        this.clientId = newValue
-        this.render()
       }
+      this.clients.push(parsedData)
+      this.clientId = parsedData.id
+      this.clientTickets = parsedData.tickets
+      this.render()
     }
   }
 
@@ -49,8 +61,10 @@ export default class Caja extends HTMLElement {
     this.shadowRoot.innerHTML = /* HTML */`
       <style>${Caja.Styles}</style>
       <h2>${this.express === true ? `Caja ${this.number} <br>(express)` : `Caja ${this.number}`}</h2>
+      <span>${this.clientTickets ? `Tickets: ${this.clientTickets}` : ''}</span>
       <h3>${this.clientId}</h3>
     `
+    this.spanTimer = this.shadowRoot.querySelector('cinema-timer')
   }
 }
 

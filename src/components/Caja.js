@@ -4,16 +4,7 @@ export default class Caja extends HTMLElement {
   number
 
   clientId = 'Sin clientes'
-  clientTickets = ''
 
-  clients = []
-  cajasTimeouts = []
-  time = 0
-  timer
-  timerInterval
-  allTickets = []
-  allTime = []
-  spanTimer
   constructor () {
     super()
     this.attachShadow({ mode: 'open' })
@@ -46,13 +37,14 @@ export default class Caja extends HTMLElement {
   attributeChangedCallback (name, oldValue, newValue) {
     if (name === 'client') {
       const parsedData = JSON.parse(newValue)
-      if (parsedData.id === '') {
+
+      if (parsedData === 'undefined') {
         this.clientId = 'Sin clientes'
         this.render()
       }
-      this.clients.push(parsedData)
+
       this.clientId = parsedData.id
-      this.clientTickets = parsedData.tickets
+
       this.render()
     }
   }
@@ -64,7 +56,6 @@ export default class Caja extends HTMLElement {
       <span>${this.clientTickets ? `Tickets: ${this.clientTickets}` : ''}</span>
       <h3>${this.clientId}</h3>
     `
-    this.spanTimer = this.shadowRoot.querySelector('cinema-timer')
   }
 }
 
